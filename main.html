@@ -1,16 +1,123 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-	<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roman Numeral Converter</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+
+    .container {
+      width: 350px;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
-   </script>
+
+  <div class="container">
+    <h2>Roman Numeral Converter</h2>
+
+    <input
+      type="number"
+      id="number"
+      min="0"
+      max="100000"
+      placeholder="Enter a number"
+    >
+
+    <button onclick="convertNumber()">Convert</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function convertToRoman(num) {
+      if (num === 0) {
+        return "";
+      }
+
+      const romanSymbols = [
+        ["M", 1000],
+        ["CM", 900],
+        ["D", 500],
+        ["CD", 400],
+        ["C", 100],
+        ["XC", 90],
+        ["L", 50],
+        ["XL", 40],
+        ["X", 10],
+        ["IX", 9],
+        ["V", 5],
+        ["IV", 4],
+        ["I", 1]
+      ];
+
+      let result = "";
+
+      for (let i = 0; i < romanSymbols.length; i++) {
+        const symbol = romanSymbols[i][0];
+        const value = romanSymbols[i][1];
+
+        while (num >= value) {
+          result += symbol;
+          num -= value;
+        }
+      }
+
+      return result;
+    }
+
+    function convertNumber() {
+      const num = Number(document.getElementById("number").value);
+
+      if (num < 0 || num > 100000 || isNaN(num)) {
+        document.getElementById("result").textContent = "Invalid input";
+        return;
+      }
+
+      document.getElementById("result").textContent = convertToRoman(num);
+    }
+  </script>
 
 </body>
-
 </html>
